@@ -6,7 +6,6 @@ import {
 	IsNumber,
 	IsPositive,
 	Length,
-	IsMobilePhone,
 	IsEmail,
 } from 'class-validator';
 import { Type } from 'class-transformer';
@@ -53,10 +52,6 @@ class ShippingDetailsDto {
 	@IsNotEmpty({ message: 'Zip code is required' })
 	@Length(3, 10)
 	zipCode!: string;
-
-	@IsString()
-	@IsMobilePhone('es-EC', {}, { message: 'Invalid phone number' })
-	phone!: string;
 }
 
 export class CreateOrderDto {

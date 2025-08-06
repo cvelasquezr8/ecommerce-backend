@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
 	IsNumber,
 	IsOptional,
@@ -29,6 +30,7 @@ export class UpdateProductDto {
 	@IsOptional()
 	@IsNumber()
 	@IsPositive()
+	@Type(() => Number)
 	stock?: number;
 
 	@IsOptional()
@@ -44,5 +46,6 @@ export class UpdateProductDto {
 	@IsOptional()
 	@IsNumber()
 	@IsPositive()
+	@Type(() => Number)
 	tax?: number;
 }

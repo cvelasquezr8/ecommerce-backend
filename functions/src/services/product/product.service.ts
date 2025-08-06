@@ -40,14 +40,19 @@ export class ProductService {
 		}
 
 		const data: Omit<ProductModel, 'id'> = {
-			...dto,
+			name: dto.name,
+			description: dto.description,
+			category: dto.category,
+			price: dto.price,
+			stock: dto.stock,
+			tax: dto.tax,
+			imageUrl: dto.imageUrl || '',
 			createdAt: Timestamp.now(),
 			updatedAt: null,
 			deletedAt: null,
 			createdBy: userID,
 			updatedBy: null,
 			deletedBy: null,
-			imageUrl: dto.imageUrl || '',
 		};
 
 		try {

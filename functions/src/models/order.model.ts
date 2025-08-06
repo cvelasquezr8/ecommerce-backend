@@ -20,7 +20,6 @@ export interface ShippingDetails {
 	state: string;
 	country: string;
 	zipCode: string;
-	phone: string;
 }
 
 export interface OrderModel {

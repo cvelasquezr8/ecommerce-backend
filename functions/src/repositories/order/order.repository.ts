@@ -15,14 +15,18 @@ export class OrderRepository {
 
 	async findProductsByIDs(productIDs: string[]): Promise<ProductModel[]> {
 		const products: ProductModel[] = [];
-		const snapshot = await db
-			.collection('products')
-			.where('id', 'in', productIDs)
-			.where('deletedAt', '==', null)
-			.get();
 
-		snapshot.forEach((doc) => {
-			products.push({ id: doc.id, ...doc.data() } as ProductModel);
+		const productSnapshots = await Promise.all(
+			productIDs.map((id) => db.collection('products').doc(id).get()),
+		);
+
+		productSnapshots.forEach((doc) => {
+			if (doc.exists) {
+				const data = doc.data();
+				if (data?.deletedAt === null) {
+					products.push({ id: doc.id, ...data } as ProductModel);
+				}
+			}
 		});
 
 		return products;

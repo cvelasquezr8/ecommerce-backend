@@ -91,37 +91,11 @@ export class OrderController {
 		}
 	};
 
-	deleteOrder = async (
+	updateOrder = async (
 		req: Request,
 		res: Response,
 		next: NextFunction,
 	): Promise<Response | void> => {
-		const orderID = req.params.id;
-		if (!orderID) {
-			return res.status(StatusCodes.BAD_REQUEST).json({
-				message: 'Order ID is required',
-			});
-		}
-
-		try {
-			const { user } = req as any;
-			await this.orderService.cancelOrder(
-				orderID,
-				user.uid,
-				user.isAdmin,
-			);
-
-			return res.status(StatusCodes.NO_CONTENT).send();
-		} catch (error) {
-			return next(error);
-		}
-	};
-
-	async updateOrder(
-		req: Request,
-		res: Response,
-		next: NextFunction,
-	): Promise<Response | void> {
 		const orderID = req.params.id;
 		if (!orderID) {
 			return res.status(StatusCodes.BAD_REQUEST).json({
@@ -158,5 +132,31 @@ export class OrderController {
 		} catch (error) {
 			return next(error);
 		}
-	}
+	};
+
+	deleteOrder = async (
+		req: Request,
+		res: Response,
+		next: NextFunction,
+	): Promise<Response | void> => {
+		const orderID = req.params.id;
+		if (!orderID) {
+			return res.status(StatusCodes.BAD_REQUEST).json({
+				message: 'Order ID is required',
+			});
+		}
+
+		try {
+			const { user } = req as any;
+			await this.orderService.cancelOrder(
+				orderID,
+				user.uid,
+				user.isAdmin,
+			);
+
+			return res.status(StatusCodes.NO_CONTENT).send();
+		} catch (error) {
+			return next(error);
+		}
+	};
 }

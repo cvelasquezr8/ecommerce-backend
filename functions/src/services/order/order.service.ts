@@ -77,7 +77,6 @@ export class OrderService {
 				city: shippingDetails.city,
 				state: shippingDetails.state,
 				zipCode: shippingDetails.zipCode,
-				phone: shippingDetails.phone,
 				country: shippingDetails.country,
 			},
 			status: OrderStatus.PENDING,
@@ -156,16 +155,6 @@ export class OrderService {
 		if (!order) {
 			logger.error(`Order with ID ${orderID} not found`);
 			throw CustomError.notFound(`Order with ID ${orderID} not found`);
-		}
-
-		if (order.status !== OrderStatus.PENDING) {
-			logger.error(
-				`Cannot cancel order with status ${order.status} for ID ${orderID}`,
-			);
-
-			throw CustomError.badRequest(
-				`Cannot cancel order with status ${order.status}`,
-			);
 		}
 
 		await this.orderRepository.updateOrderStatus(

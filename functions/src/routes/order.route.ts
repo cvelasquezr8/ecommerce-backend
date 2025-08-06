@@ -13,7 +13,6 @@ const orderController = new OrderController(orderService);
 const rolesAllowed = ['admin'];
 
 OrderRouter.get('/me', authMiddleware, orderController.getMyOrders);
-OrderRouter.get('/:id', authMiddleware, orderController.getOrderByID);
 OrderRouter.get(
 	'/',
 	authMiddleware,
@@ -21,12 +20,13 @@ OrderRouter.get(
 	orderController.getAllOrders,
 );
 OrderRouter.post('/', authMiddleware, orderController.createOrder);
-OrderRouter.delete('/:id', authMiddleware, orderController.deleteOrder);
 OrderRouter.put(
 	'/:id',
 	authMiddleware,
 	authorizeRoles(...rolesAllowed),
 	orderController.updateOrder,
 );
+OrderRouter.get('/:id', authMiddleware, orderController.getOrderByID);
+OrderRouter.delete('/:id', authMiddleware, orderController.deleteOrder);
 
 export default OrderRouter;

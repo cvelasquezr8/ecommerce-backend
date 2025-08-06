@@ -18,7 +18,7 @@ import { OrderStatus } from '../../common/enums/order-status.enum';
 
 class ResponseOrderItemDto {
 	@IsString()
-	productID!: string;
+	id!: string;
 
 	@IsString()
 	name!: string;
@@ -35,21 +35,21 @@ class ResponseOrderItemDto {
 
 	@IsNumber()
 	@IsPositive()
-	priceAtPurchase!: number;
+	price!: number;
 
 	@IsNumber()
 	@IsPositive()
-	taxAtPurchase!: number;
+	tax!: number;
 
 	static fromModel(item: OrderItem): ResponseOrderItemDto {
 		const dto = new ResponseOrderItemDto();
-		dto.productID = item.productID;
+		dto.id = item.productID;
 		dto.name = item.name;
 		dto.description = item.description;
 		dto.imageUrl = item.imageUrl;
 		dto.quantity = item.quantity;
-		dto.priceAtPurchase = item.price;
-		dto.taxAtPurchase = item.tax;
+		dto.price = item.price;
+		dto.tax = item.tax;
 		return dto;
 	}
 }
@@ -84,9 +84,6 @@ class ResponseShippingDetailsDto {
 	@IsString()
 	zipCode!: string;
 
-	@IsString()
-	phone!: string;
-
 	static fromModel(details: ShippingDetails): ResponseShippingDetailsDto {
 		const dto = new ResponseShippingDetailsDto();
 		dto.firstName = details.firstName;
@@ -97,7 +94,6 @@ class ResponseShippingDetailsDto {
 		dto.state = details.state;
 		dto.country = details.country;
 		dto.zipCode = details.zipCode;
-		dto.phone = details.phone;
 		return dto;
 	}
 }
