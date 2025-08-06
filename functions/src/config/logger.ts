@@ -1,5 +1,4 @@
 import winston from 'winston';
-const chalk = require('chalk');
 
 const baseLogger = winston.createLogger({
 	level: process.env.NODE_ENV === 'production' ? 'warn' : 'debug',
@@ -13,9 +12,8 @@ const baseLogger = winston.createLogger({
 });
 
 export const createLogger = (context: string) => ({
-	info: (msg: string) => baseLogger.info(chalk.cyan(`[${context}] ${msg}`)),
-	warn: (msg: string) => baseLogger.warn(chalk.yellow(`[${context}] ${msg}`)),
-	error: (msg: string) => baseLogger.error(chalk.red(`[${context}] ${msg}`)),
-	debug: (msg: string) =>
-		baseLogger.debug(chalk.green(`[${context}] ${msg}`)),
+	info: (msg: string) => baseLogger.info(`[${context}] ${msg}`),
+	warn: (msg: string) => baseLogger.warn(`[${context}] ${msg}`),
+	error: (msg: string) => baseLogger.error(`[${context}] ${msg}`),
+	debug: (msg: string) => baseLogger.debug(`[${context}] ${msg}`),
 });

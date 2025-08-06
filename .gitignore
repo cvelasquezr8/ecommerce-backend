@@ -15,6 +15,7 @@ functions/node_modules/
 functions/lib/
 functions/keys/
 functions/.env
+functions/firestore-debug.log
 .env
 
 .DS_Store

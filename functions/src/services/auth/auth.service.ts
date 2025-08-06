@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { Timestamp } from 'firebase-admin/firestore';
 
+import { Timestamp } from 'firebase-admin/firestore';
 import { UserModel } from '../../models/user.model';
 import { CustomError, createLogger, auth } from '../../config/';
 import { LoginUserDto, RegisterUserDto } from '../../dtos/auth';
@@ -11,8 +11,8 @@ const logger = createLogger('services/auth');
 
 export class AuthService {
 	private auth = auth;
+	private apiKey = process.env.FIREBASE_API_KEY;
 	constructor(private readonly userRepository: UserRepository) {
-		// Initialize Firebase Admin SDK if not already initialized
 		if (!this.auth) {
 			throw CustomError.internalServerError(
 				'Firebase Admin SDK not initialized',
@@ -72,7 +72,6 @@ export class AuthService {
 		loginUserDto: LoginUserDto,
 	): Promise<ResponseUserDto> => {
 		const { email, password } = loginUserDto;
-
 		const userExists = await this.userExists(email);
 		if (!userExists) {
 			throw CustomError.unauthorized('Invalid email or password');
@@ -80,7 +79,7 @@ export class AuthService {
 
 		try {
 			const response = await axios.post(
-				`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.FIREBASE_API_KEY}`,
+				`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.apiKey}`,
 				{
 					email,
 					password,

@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "e-commerce-b7f6e"
-  }
+    "default": "e-commerce-b7f6e",
+    "ecommerce-backend": "crypto-app-95a38",
+    "ecommerce-backend-firebase": "e-commerce-b7f6e"
+  },
+  "targets": {},
+  "etags": {}
 }
