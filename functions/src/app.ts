@@ -1,5 +1,10 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
+import 'reflect-metadata';
+
+dotenv.config();
+
 import { AuthRouter, ProductRouter, OrderRouter, UserRouter } from './routes';
 import { errorHandler } from './middlewares';
 
@@ -19,7 +24,6 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// setupSwagger(app);
 app.use('/auth', AuthRouter);
 app.use('/product', ProductRouter);
 app.use('/order', OrderRouter);
