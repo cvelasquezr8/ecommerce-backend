@@ -1,5 +1,5 @@
 {
-	"name": "functions",
+	"name": "ecommerce-backend-functions",
 	"scripts": {
 		"build": "tsc",
 		"start": "firebase emulators:start --only functions",
