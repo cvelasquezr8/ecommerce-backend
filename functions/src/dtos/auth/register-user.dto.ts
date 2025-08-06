@@ -1,26 +1,29 @@
 import {
-  IsEmail,
-  IsNotEmpty,
-  IsString,
-  MinLength,
-  IsArray,
-  ArrayNotEmpty,
+	IsEmail,
+	IsNotEmpty,
+	IsString,
+	IsArray,
+	ArrayNotEmpty,
 } from 'class-validator';
 
 export class RegisterUserDto {
-  @IsString()
-  @IsNotEmpty({ message: 'Username is required' })
-  userName!: string;
+	@IsString()
+	@IsNotEmpty({ message: 'First name is required' })
+	firstName!: string;
 
-  @IsEmail({}, { message: 'Invalid email address' })
-  email!: string;
+	@IsString()
+	@IsNotEmpty({ message: 'Last name is required' })
+	lastName!: string;
 
-  @IsString()
-  @MinLength(6, { message: 'Password must be at least 6 characters long' })
-  password!: string;
+	@IsString()
+	@IsNotEmpty({ message: 'Password is required' })
+	password!: string;
 
-  @IsArray()
-  @ArrayNotEmpty({ message: 'Roles cannot be empty if provided' })
-  @IsString({ each: true })
-  roles!: string[];
+	@IsEmail({}, { message: 'Invalid email address' })
+	email!: string;
+
+	@IsArray()
+	@ArrayNotEmpty({ message: 'Roles cannot be empty if provided' })
+	@IsString({ each: true })
+	roles!: string[];
 }

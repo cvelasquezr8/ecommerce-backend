@@ -1,23 +1,23 @@
-import { CustomError, db } from "../../config";
+import { createLogger, CustomError } from '../../config';
+import { ResponseUserDto } from '../../dtos/user/response-user.dto';
+import { UserRepository } from '../../repositories/user/user.repository';
+
+const logger = createLogger('services/user');
 
 export class UserService {
-	private db = db;
-	constructor() {
-		// Initialize Firebase Admin SDK if not already initialized
-		if (!this.db) {
-			throw CustomError.internalServerError(
-				'Firebase Admin SDK not initialized',
-			);
+	constructor(private readonly userRepository: UserRepository) {}
+
+	async getUserById(uid: string) {
+		const userDoc = await this.userRepository.findByID(uid);
+		if (!userDoc) {
+			logger.error(`User with ID ${uid} not found`);
+			throw CustomError.notFound('User not found');
 		}
+		return userDoc;
 	}
 
-  static async getUserById(uid: string) {
-		const userDoc = await db.collection('users').doc(uid).get();
-		if (!userDoc.exists) {
-			throw CustomError.unauthorized('User not found in database');
-		}
-
-		return userDoc.data();
+	async getAllUsers() {
+		const users = await this.userRepository.findAll();
+		return users.map((user) => ResponseUserDto.fromModel(user));
 	}
-
 }

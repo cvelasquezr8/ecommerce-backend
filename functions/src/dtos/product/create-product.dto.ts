@@ -34,4 +34,8 @@ export class CreateProductDto {
 	@IsString()
 	@MinLength(3, { message: 'Category must be at least 3 characters long' })
 	category!: string;
+
+	@IsNumber()
+	@IsPositive()
+	tax!: number;
 }

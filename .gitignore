@@ -9,4 +9,12 @@ typings/
 node_modules/
 key/
 lib/
+test-login/
 *.local
+functions/node_modules/
+functions/lib/
+functions/keys/
+functions/.env
+.env
+
+.DS_Store

@@ -4,7 +4,7 @@ import { validate } from 'class-validator';
 import { StatusCodes } from 'http-status-codes';
 import { plainToInstance } from 'class-transformer';
 
-import { CreateProductDto } from '../../dtos/product';
+import { CreateProductDto, UpdateProductDto } from '../../dtos/product';
 import { ProductService } from '../../services/product/product.service';
 
 export class ProductController {
@@ -89,6 +89,46 @@ export class ProductController {
 			const { user } = req as any;
 			await this.productService.deleteProductByID(productID, user.uid);
 			return res.status(StatusCodes.NO_CONTENT).send();
+		} catch (error) {
+			return next(error);
+		}
+	};
+
+	updateProduct = async (
+		req: Request,
+		res: Response,
+		next: NextFunction,
+	): Promise<Response | void> => {
+		const productID = req.params.id;
+		if (!productID) {
+			return res
+				.status(StatusCodes.BAD_REQUEST)
+				.json({ message: 'Product ID is required' });
+		}
+
+		const { user } = req as any;
+		const updateProductDto = plainToInstance(UpdateProductDto, req.body);
+		const errors = await validate(updateProductDto);
+		if (errors.length > 0) {
+			const errorMessages = errors.map((e) =>
+				Object.values(e.constraints || {}).join(', '),
+			);
+
+			return res
+				.status(StatusCodes.BAD_REQUEST)
+				.json({ message: 'Validation failed', errors: errorMessages });
+		}
+
+		try {
+			const product = await this.productService.updateProduct(
+				productID,
+				updateProductDto,
+				user.uid,
+			);
+			return res.status(StatusCodes.OK).json({
+				message: 'Product updated successfully',
+				product,
+			});
 		} catch (error) {
 			return next(error);
 		}

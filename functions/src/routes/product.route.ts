@@ -14,8 +14,23 @@ const rolesAllowed = ['admin'];
 
 ProductRouter.get('/', authMiddleware, productController.getAllProducts);
 ProductRouter.get('/:id', authMiddleware, productController.getProductByID);
-ProductRouter.post('/', authMiddleware, authorizeRoles(...rolesAllowed), productController.createProduct);
-// ProductRouter.put('/:id', authMiddleware, authorizeRoles(...rolesAllowed), productController.updateProduct);
-ProductRouter.delete('/:id', authMiddleware, authorizeRoles(...rolesAllowed), productController.deleteProduct);
+ProductRouter.post(
+	'/',
+	authMiddleware,
+	authorizeRoles(...rolesAllowed),
+	productController.createProduct,
+);
+ProductRouter.put(
+	'/:id',
+	authMiddleware,
+	authorizeRoles(...rolesAllowed),
+	productController.updateProduct,
+);
+ProductRouter.delete(
+	'/:id',
+	authMiddleware,
+	authorizeRoles(...rolesAllowed),
+	productController.deleteProduct,
+);
 
 export default ProductRouter;

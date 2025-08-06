@@ -40,4 +40,9 @@ export class UpdateProductDto {
 	@IsString()
 	@MinLength(3, { message: 'Category must be at least 3 characters long' })
 	category?: string;
+
+	@IsOptional()
+	@IsNumber()
+	@IsPositive()
+	tax?: number;
 }
